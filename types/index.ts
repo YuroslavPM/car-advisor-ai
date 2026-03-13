@@ -17,3 +17,12 @@ export interface ChatHistory {
   role: 'user' | 'model';
   parts: { text: string }[];
 }
+
+export interface ChatSession {
+  id: string;
+  title: string;          // auto-generated from first user message
+  messages: Message[];
+  history: ChatHistory[]; // Gemini-format history for API
+  createdAt: string;      // ISO string for JSON serialization
+  updatedAt: string;
+}
