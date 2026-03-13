@@ -1,7 +1,7 @@
 'use client';
 
 import { SavedCar } from '@/types';
-import { Car, X, Plus, BookmarkCheck } from 'lucide-react';
+import { Car, X, Plus, Bookmark } from 'lucide-react';
 
 interface SavedCarsSidebarProps {
   cars: SavedCar[];
@@ -9,41 +9,32 @@ interface SavedCarsSidebarProps {
   onAddClick: () => void;
 }
 
-export default function SavedCarsSidebar({
-  cars,
-  onRemove,
-  onAddClick,
-}: SavedCarsSidebarProps) {
+export default function SavedCarsSidebar({ cars, onRemove, onAddClick }: SavedCarsSidebarProps) {
   return (
     <aside
-      className="flex flex-col h-full rounded-2xl border overflow-hidden"
+      className="flex flex-col h-full rounded-xl overflow-hidden"
       style={{
-        background: 'rgba(255,255,255,0.6)',
-        borderColor: 'rgba(30,58,95,0.15)',
-        backdropFilter: 'blur(12px)',
+        background: 'rgba(255,255,255,0.03)',
+        border: '1px solid rgba(255,255,255,0.07)',
       }}
     >
       {/* Header */}
       <div
-        className="flex items-center justify-between px-4 py-3 border-b"
-        style={{ borderColor: 'rgba(30,58,95,0.12)' }}
+        className="flex items-center justify-between px-4 py-3"
+        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
       >
         <div className="flex items-center gap-2">
-          <BookmarkCheck size={18} style={{ color: '#d97706' }} />
-          <h2 className="font-semibold text-sm" style={{ color: '#1e3a5f' }}>
+          <Bookmark size={15} style={{ color: '#7c6af7' }} />
+          <span className="text-sm font-semibold" style={{ color: '#e2e8f0', fontFamily: 'Space Grotesk, sans-serif' }}>
             Saved Cars
-          </h2>
+          </span>
         </div>
         <button
           onClick={onAddClick}
-          className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-full font-medium transition-all hover:opacity-90 active:scale-95"
-          style={{
-            background: 'linear-gradient(135deg, #d97706, #b45309)',
-            color: '#fff',
-          }}
+          className="btn-violet flex items-center gap-1 text-xs px-3 py-1.5"
+          style={{ borderRadius: '8px' }}
         >
-          <Plus size={13} />
-          Add Car
+          <Plus size={12} /> Add
         </button>
       </div>
 
@@ -52,48 +43,41 @@ export default function SavedCarsSidebar({
         {cars.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full py-10 gap-3 text-center">
             <div
-              className="w-12 h-12 rounded-full flex items-center justify-center"
-              style={{ background: 'rgba(217,119,6,0.1)' }}
+              className="w-11 h-11 rounded-xl flex items-center justify-center"
+              style={{ background: 'rgba(124,106,247,0.1)', border: '1px solid rgba(124,106,247,0.15)' }}
             >
-              <Car size={22} style={{ color: '#d97706' }} />
+              <Car size={20} style={{ color: '#7c6af7' }} />
             </div>
-            <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>
-              No saved cars yet.
-              <br />
-              Add cars you're interested in!
+            <p className="text-xs leading-relaxed" style={{ color: '#475569' }}>
+              No saved cars yet.<br />Add cars you&apos;re interested in!
             </p>
           </div>
         ) : (
           cars.map((car) => (
             <div
               key={car.id}
-              className="group relative p-3 rounded-xl border transition-all hover:shadow-sm"
+              className="group relative p-3 rounded-xl transition-all"
               style={{
-                background: 'rgba(255,255,255,0.8)',
-                borderColor: 'rgba(30,58,95,0.12)',
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.07)',
               }}
             >
               <button
                 onClick={() => onRemove(car.id)}
-                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity w-6 h-6 rounded-full flex items-center justify-center hover:bg-red-100"
-                aria-label="Remove car"
+                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity w-5 h-5 rounded-md flex items-center justify-center"
+                style={{ background: 'rgba(239,68,68,0.15)' }}
+                aria-label="Remove"
               >
-                <X size={13} style={{ color: '#ef4444' }} />
+                <X size={11} color="#ef4444" />
               </button>
-              <p
-                className="font-semibold text-sm pr-6 leading-tight"
-                style={{ color: '#1e3a5f' }}
-              >
+              <p className="font-semibold text-xs pr-6 truncate" style={{ color: '#e2e8f0', fontFamily: 'Space Grotesk, sans-serif' }}>
                 {car.name}
               </p>
-              <p className="text-xs mt-0.5 font-medium" style={{ color: '#d97706' }}>
-                {car.price}
-              </p>
+              {car.price && (
+                <p className="text-xs mt-0.5 font-medium" style={{ color: '#7c6af7' }}>{car.price}</p>
+              )}
               {car.notes && (
-                <p
-                  className="text-xs mt-1.5 leading-relaxed line-clamp-2"
-                  style={{ color: '#64748b' }}
-                >
+                <p className="text-xs mt-1.5 leading-relaxed line-clamp-2" style={{ color: '#475569' }}>
                   {car.notes}
                 </p>
               )}
@@ -102,13 +86,10 @@ export default function SavedCarsSidebar({
         )}
       </div>
 
-      {/* Footer count */}
+      {/* Footer */}
       <div
-        className="px-4 py-2 border-t text-xs"
-        style={{
-          borderColor: 'rgba(30,58,95,0.12)',
-          color: '#94a3b8',
-        }}
+        className="px-4 py-2 text-xs"
+        style={{ borderTop: '1px solid rgba(255,255,255,0.06)', color: '#334155' }}
       >
         {cars.length} car{cars.length !== 1 ? 's' : ''} saved
       </div>

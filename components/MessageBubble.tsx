@@ -12,51 +12,44 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
   const isUser = message.role === 'user';
 
   return (
-    <div
-      className={`message-bubble flex gap-3 ${
-        isUser ? 'flex-row-reverse' : 'flex-row'
-      }`}
-    >
+    <div className={`message-bubble flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
       {/* Avatar */}
       <div
-        className={`flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center shadow-md ${
+        className="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center"
+        style={
           isUser
-            ? 'bg-amber-500 text-white'
-            : 'bg-navy-800 text-amber-400 border border-amber-400/30'
-        }`}
-        style={{
-          backgroundColor: isUser ? '#d97706' : '#1e3a5f',
-        }}
+            ? { background: 'linear-gradient(135deg, #7c6af7, #6457e8)' }
+            : { background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.2)' }
+        }
       >
-        {isUser ? (
-          <User size={18} />
-        ) : (
-          <Bot size={18} style={{ color: '#f59e0b' }} />
-        )}
+        {isUser
+          ? <User size={15} color="white" />
+          : <Bot size={15} color="#34d399" />
+        }
       </div>
 
       {/* Bubble */}
-      <div className={`flex flex-col max-w-[75%] ${isUser ? 'items-end' : 'items-start'}`}>
+      <div className={`flex flex-col max-w-[76%] ${isUser ? 'items-end' : 'items-start'}`}>
         <div
-          className={`px-4 py-3 rounded-2xl shadow-sm text-sm leading-relaxed whitespace-pre-wrap ${
-            isUser
-              ? 'rounded-tr-sm text-white'
-              : 'rounded-tl-sm border'
-          }`}
+          className="px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap"
           style={
             isUser
-              ? { background: 'linear-gradient(135deg, #d97706, #b45309)', color: '#fff' }
+              ? {
+                  background: 'linear-gradient(135deg, #7c6af7, #6457e8)',
+                  color: '#fff',
+                  borderRadius: '18px 4px 18px 18px',
+                }
               : {
-                  background: 'rgba(255,255,255,0.7)',
-                  borderColor: 'rgba(30,58,95,0.15)',
-                  color: '#1e293b',
-                  backdropFilter: 'blur(8px)',
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  color: '#e2e8f0',
+                  borderRadius: '4px 18px 18px 18px',
                 }
           }
         >
           {message.content}
         </div>
-        <span className="text-xs mt-1 opacity-50 px-1" style={{ color: '#64748b' }}>
+        <span className="text-xs mt-1 px-1" style={{ color: '#334155' }}>
           {formatTime(new Date(message.timestamp))}
         </span>
       </div>

@@ -8,6 +8,18 @@ interface AddCarModalProps {
   onClose: () => void;
 }
 
+const fieldStyle: React.CSSProperties = {
+  background: 'rgba(255,255,255,0.04)',
+  border: '1px solid rgba(255,255,255,0.1)',
+  borderRadius: '10px',
+  color: '#e2e8f0',
+  width: '100%',
+  padding: '10px 14px',
+  fontSize: '0.875rem',
+  fontFamily: 'Plus Jakarta Sans, sans-serif',
+  transition: 'all 0.2s',
+};
+
 export default function AddCarModal({ onSave, onClose }: AddCarModalProps) {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -19,51 +31,45 @@ export default function AddCarModal({ onSave, onClose }: AddCarModalProps) {
     onClose();
   };
 
-  const inputStyle = {
-    background: 'rgba(255,255,255,0.8)',
-    borderColor: 'rgba(30,58,95,0.2)',
-    color: '#1e293b',
-    outline: 'none',
-  };
-
   return (
     <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4"
-      style={{ background: 'rgba(15,30,60,0.4)', backdropFilter: 'blur(8px)' }}
+      style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(12px)' }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div
-        className="modal-slide-up w-full max-w-md rounded-2xl border p-6 shadow-2xl"
+        className="modal-slide-up w-full max-w-md rounded-2xl p-6"
         style={{
-          background: 'rgba(255,255,255,0.95)',
-          borderColor: 'rgba(30,58,95,0.15)',
+          background: '#0f1829',
+          border: '1px solid rgba(124,106,247,0.25)',
+          boxShadow: '0 0 60px rgba(124,106,247,0.15), 0 30px 60px rgba(0,0,0,0.5)',
         }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between mb-5">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-2.5">
             <div
-              className="w-8 h-8 rounded-full flex items-center justify-center"
-              style={{ background: 'rgba(217,119,6,0.1)' }}
+              className="w-8 h-8 rounded-xl flex items-center justify-center"
+              style={{ background: 'rgba(124,106,247,0.15)', border: '1px solid rgba(124,106,247,0.2)' }}
             >
-              <Car size={16} style={{ color: '#d97706' }} />
+              <Car size={16} color="#7c6af7" />
             </div>
-            <h3 className="font-bold text-base" style={{ color: '#1e3a5f' }}>
+            <h3 className="font-bold text-base" style={{ color: '#f1f5f9', fontFamily: 'Space Grotesk, sans-serif' }}>
               Add a Car
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors"
+            className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors hover:bg-white/5"
           >
-            <X size={16} style={{ color: '#64748b' }} />
+            <X size={15} color="#64748b" />
           </button>
         </div>
 
         {/* Fields */}
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold mb-1.5" style={{ color: '#1e3a5f' }}>
+            <label className="block text-xs font-semibold mb-2" style={{ color: '#64748b', fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               Car Name / Model *
             </label>
             <input
@@ -71,17 +77,12 @@ export default function AddCarModal({ onSave, onClose }: AddCarModalProps) {
               placeholder="e.g. Volkswagen Golf 8 2023"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl border text-sm transition-all focus:ring-2"
-              style={{
-                ...inputStyle,
-                '--tw-ring-color': 'rgba(217,119,6,0.3)',
-              } as React.CSSProperties}
+              style={fieldStyle}
               autoFocus
             />
           </div>
-
           <div>
-            <label className="block text-xs font-semibold mb-1.5" style={{ color: '#1e3a5f' }}>
+            <label className="block text-xs font-semibold mb-2" style={{ color: '#64748b', fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               Price
             </label>
             <input
@@ -89,50 +90,41 @@ export default function AddCarModal({ onSave, onClose }: AddCarModalProps) {
               placeholder="e.g. €18,500"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl border text-sm transition-all focus:ring-2"
-              style={{
-                ...inputStyle,
-                '--tw-ring-color': 'rgba(217,119,6,0.3)',
-              } as React.CSSProperties}
+              style={fieldStyle}
             />
           </div>
-
           <div>
-            <label className="block text-xs font-semibold mb-1.5" style={{ color: '#1e3a5f' }}>
-              Notes <span style={{ color: '#94a3b8', fontWeight: 400 }}>(optional)</span>
+            <label className="block text-xs font-semibold mb-2" style={{ color: '#64748b', fontFamily: 'Space Grotesk, sans-serif', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+              Notes <span style={{ color: '#334155', textTransform: 'none', letterSpacing: 0 }}>(optional)</span>
             </label>
             <textarea
-              placeholder="Your impressions, pros/cons, test drive notes..."
+              placeholder="Impressions, pros/cons, test drive notes..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={3}
-              className="w-full px-3 py-2.5 rounded-xl border text-sm transition-all focus:ring-2 resize-none"
-              style={{
-                ...inputStyle,
-                '--tw-ring-color': 'rgba(217,119,6,0.3)',
-              } as React.CSSProperties}
+              style={{ ...fieldStyle, resize: 'none' }}
             />
           </div>
         </div>
 
         {/* Actions */}
-        <div className="flex gap-2 mt-5">
+        <div className="flex gap-2 mt-6">
           <button
             onClick={onClose}
-            className="flex-1 py-2.5 rounded-xl border text-sm font-medium transition-all hover:bg-slate-50"
-            style={{ borderColor: 'rgba(30,58,95,0.2)', color: '#64748b' }}
+            className="flex-1 py-2.5 rounded-xl text-sm font-medium transition-colors hover:bg-white/5"
+            style={{ border: '1px solid rgba(255,255,255,0.08)', color: '#64748b', fontFamily: 'Space Grotesk, sans-serif' }}
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
             disabled={!name.trim()}
-            className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-90 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             style={{
-              background: name.trim()
-                ? 'linear-gradient(135deg, #d97706, #b45309)'
-                : '#e2e8f0',
-              color: name.trim() ? '#fff' : '#94a3b8',
+              background: name.trim() ? 'linear-gradient(135deg, #7c6af7, #6457e8)' : 'rgba(255,255,255,0.05)',
+              color: name.trim() ? '#fff' : '#64748b',
+              fontFamily: 'Space Grotesk, sans-serif',
+              boxShadow: name.trim() ? '0 4px 16px rgba(124,106,247,0.35)' : 'none',
             }}
           >
             Save Car
