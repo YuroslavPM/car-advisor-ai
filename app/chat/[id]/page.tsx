@@ -61,7 +61,7 @@ export default function ChatSessionPage() {
   const [isTyping,    setIsTyping]    = useState(false);
   const [showChips,   setShowChips]   = useState(true);
   const [showSaved,   setShowSaved]   = useState(false);
-  const [showHistory, setShowHistory] = useState(true);
+  const [showHistory, setShowHistory] = useState(false);
   const [showModal,   setShowModal]   = useState(false);
   const [savedCars,   setSavedCars]   = useState<SavedCar[]>([]);
   const [ready,       setReady]       = useState(false);
@@ -329,15 +329,29 @@ export default function ChatSessionPage() {
       {/* ── Body ────────────────────────────────────────────── */}
       <div className="flex flex-1 overflow-hidden">
 
-        {/* Left: History sidebar */}
+        {/* Left: History sidebar — overlay on mobile, inline on desktop */}
         {showHistory && (
-          <ChatHistorySidebar
-            sessions={sessions}
-            activeSessionId={sessionId}
-            onSelect={goToSession}
-            onNew={handleNewChat}
-            onDelete={handleDelete}
-          />
+          <>
+            {/* Mobile backdrop */}
+            <div
+              className="fixed inset-0 z-40 sm:hidden"
+              style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' }}
+              onClick={() => setShowHistory(false)}
+            />
+            {/* Sidebar — fixed on mobile, inline on desktop */}
+            <div
+              className="fixed sm:relative inset-y-0 left-0 z-50 sm:z-auto flex-shrink-0"
+              style={{ top: 0 }}
+            >
+              <ChatHistorySidebar
+                sessions={sessions}
+                activeSessionId={sessionId}
+                onSelect={(s) => { goToSession(s); setShowHistory(false); }}
+                onNew={() => { handleNewChat(); setShowHistory(false); }}
+                onDelete={handleDelete}
+              />
+            </div>
+          </>
         )}
 
         {/* Centre: Chat */}
