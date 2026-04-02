@@ -1,17 +1,17 @@
 # CarAdvisorAI 🚗
 
-An AI-powered car buying advisor chatbot that helps users find their perfect car based on budget, needs, and preferences — built with **Next.js 16**, **TypeScript**, **Tailwind CSS**, and **Google Gemini 1.5 Flash**.
+An AI-powered car buying advisor chatbot that helps users find their perfect car based on budget, needs, and preferences — built with **Next.js 16**, **TypeScript**, **Tailwind CSS v4**, and **Google Gemini 2.5 Flash**.
 
 ---
 
 ## Features
 
-- 🤖 AI automotive expert chatbot (Gemini 1.5 Flash)
-- 💬 Full conversation history maintained across messages
+- 🤖 AI automotive expert chatbot (Gemini 2.5 Flash)
+- 💬 Multi-session management with full conversation history
 - 🌍 Bilingual support (English & Bulgarian)
-- 💾 Save favourite cars with notes (localStorage)
+- 💾 Save favourite cars with prices and notes (localStorage)
 - ⚡ Fast suggestion chips for quick starts
-- 🎨 Premium warm cream + deep navy design system
+- 🎨 Premium dark-themed UI with violet accents
 - 📱 Fully mobile responsive
 
 ---
@@ -20,11 +20,13 @@ An AI-powered car buying advisor chatbot that helps users find their perfect car
 
 | Technology | Purpose |
 |---|---|
-| Next.js 14 (App Router) | Framework, routing, SSR |
+| Next.js 16 (App Router) | Framework, routing, SSR |
+| React 19 | UI Library |
 | TypeScript | Type safety |
-| Tailwind CSS v4 | Styling |
+| Tailwind CSS v4 | Styling & Design System |
 | Lucide React | Icons |
-| Google Gemini 1.5 Flash | AI responses |
+| Google Gemini 2.5 Flash | AI responses |
+| React Markdown | Message formatting |
 | clsx + tailwind-merge | Class utilities |
 
 ---
@@ -64,25 +66,28 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ```
 app/
-  layout.tsx           — Root layout + metadata
-  page.tsx             — Landing page
-  globals.css          — Design system, animations, fonts
+  layout.tsx             — Root layout + metadata
+  page.tsx               — Landing page with features
+  globals.css            — Tailwind v4 configuration + custom animations
   chat/
-    page.tsx           — Chat UI (full feature)
+    page.tsx             — Chat entry point (redirects to session)
+    [id]/
+      page.tsx           — Full chat session interface
   api/
     chat/
-      route.ts         — POST /api/chat → Gemini proxy
+      route.ts           — POST /api/chat → Gemini proxy
 components/
-  MessageBubble.tsx    — Animated message with avatar + timestamp
-  TypingIndicator.tsx  — Bouncing dots loader
-  SavedCarsSidebar.tsx — Sidebar with saved cars list
-  AddCarModal.tsx      — Slide-up modal to add a car
+  MessageBubble.tsx      — Animated message with markdown support
+  TypingIndicator.tsx    — Bouncing dots loader
+  ChatHistorySidebar.tsx — Session management (new/delete/switch)
+  SavedCarsSidebar.tsx   — Sidebar with saved cars list
+  AddCarModal.tsx        — Slide-up modal to add a car
 lib/
-  gemini.ts            — Gemini API call + system prompt
-  utils.ts             — cn() utility + formatTime()
+  gemini.ts              — Gemini 2.5 Flash API call + system prompt
+  utils.ts               — cn() utility + formatTime()
 types/
-  index.ts             — Message, SavedCar, ChatHistory interfaces
-.env.local.example     — API key placeholder
+  index.ts               — Message, SavedCar, ChatSession interfaces
+.env.local.example       — API key placeholder
 ```
 
 ---
@@ -113,7 +118,7 @@ The system prompt explicitly instructs:
 > *"Respond in the same language the user writes in (support both Bulgarian and English)."*
 
 ### 5. Constrained Output
-`maxOutputTokens: 1024` and `temperature: 0.7` balance creativity with conciseness and accuracy.
+`maxOutputTokens: 12096` and `temperature: 0.7` balance creativity with thoroughness and accuracy.
 
 ---
 
@@ -121,11 +126,11 @@ The system prompt explicitly instructs:
 
 | Requirement | Implementation |
 |---|---|
-| Next.js 14 App Router | ✅ `app/` directory with layout, pages, API route |
-| TypeScript throughout | ✅ Strict types in all files |
-| Tailwind CSS styling | ✅ Global CSS + Tailwind v4 utilities |
-| Google Gemini integration | ✅ `lib/gemini.ts` + `/api/chat` route |
-| Conversation history | ✅ `ChatHistory[]` sent with every request |
+| Next.js 16 App Router | ✅ `app/` directory with layout, pages, API route |
+| React 19 + TypeScript | ✅ Strict types and modern React patterns |
+| Tailwind CSS v4 styling | ✅ Global CSS + Tailwind v4 utilities |
+| Google Gemini integration | ✅ `lib/gemini.ts` (Gemini 2.5 Flash) |
+| Multi-session history | ✅ `ChatHistorySidebar` + LocalStorage persistence |
 | Saved cars (localStorage) | ✅ `SavedCarsSidebar` + `AddCarModal` |
 | Typing indicator | ✅ `TypingIndicator` with 3 bouncing dots |
 | Suggestion chips | ✅ 5 chips, disappear after first message |
@@ -133,4 +138,4 @@ The system prompt explicitly instructs:
 | Mobile responsive | ✅ Responsive at all breakpoints |
 | Custom animations | ✅ fadeSlideUp, typingBounce, modalSlideUp, float |
 | Environment security | ✅ API key only on server-side route |
-| Unique design | ✅ Warm cream + deep navy, Playfair Display + DM Sans |
+| Unique design | ✅ Space Grotesk, glassmorphism, violet accents |
